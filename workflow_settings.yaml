@@ -1,0 +1,4 @@
+defaultProject: ap-training-dataform-101-eng
+defaultDataset: dataform
+defaultAssertionDataset: dataform_assertions
+dataformCoreVersion: 3.0.37

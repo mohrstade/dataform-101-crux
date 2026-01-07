@@ -1,0 +1,6 @@
+config {
+    type:"declaration",
+    project: "chrome-ux-report",
+    dataset: "country_de",
+    name: "20*"
+}
