@@ -1,0 +1,10 @@
+config {
+    type: "assertion"
+}
+
+select 
+    form_factor
+from
+    ${ref("002_crux_overview")}
+where
+    form_factor is null

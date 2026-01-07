@@ -1,0 +1,30 @@
+config {
+    type: "table",
+    bigquery: {
+        partitionBy: "month",
+        clusterBy: ["form_factor"]
+    },
+    assertions:{
+        nonNull:"form_factor",
+        uniqueKey:["url","form_factor"],
+        rowConditions:[
+            "first_paint > 0.1",
+            "first_paint < 1"
+        ]
+    }
+}
+
+select
+    parse_date('%Y%m', concat("20", _table_suffix)) as month
+    --concat("20",_table_suffix) -- "202511"
+    ,origin as url
+    ,form_factor.name as form_factor
+    ,sum(first_paint.histogram.`bin`[SAFE_OFFSET(0)].density) as first_paint
+    ,sum(first_contentful_paint.histogram.`bin`[SAFE_OFFSET(0)].density) as first_contentful_paint
+    ,sum(largest_contentful_paint.histogram.`bin`[SAFE_OFFSET(0)].density) as largest_contentful_paint
+
+from
+    ${ref("20*")} 
+where
+    _table_suffix = "2511" --between "2501" and "2511"
+group by all
